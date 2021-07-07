@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/gfleury/go-bitbucket-v1"
+	"github.com/clyphub/go-bitbucket-v1"
 )
 
 func main() {
