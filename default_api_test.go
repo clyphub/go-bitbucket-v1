@@ -623,6 +623,7 @@ func TestDefaultApiService_CreateBranch(t *testing.T) {
 	type args struct {
 		projectKey     string
 		repositorySlug string
+		requestBody    interface{}
 	}
 	tests := []struct {
 		name                     string
@@ -641,7 +642,7 @@ func TestDefaultApiService_CreateBranch(t *testing.T) {
 			a := &DefaultApiService{
 				client: tt.fields.client,
 			}
-			got, err := a.CreateBranch(tt.args.projectKey, tt.args.repositorySlug)
+			got, err := a.CreateBranch(tt.args.projectKey, tt.args.repositorySlug, tt.args.requestBody)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("DefaultApiService.CreateBranch() error = %v, wantErr %v", err, tt.wantErr)
 				return
