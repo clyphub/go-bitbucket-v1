@@ -663,9 +663,12 @@ func (a *DefaultApiService) CreatePullRequest(projectKey, repositorySlug string,
 
 /* DefaultApiService
 Creates a branch using the information provided in the {@link RestCreateBranchRequest request}  &lt;p&gt;  The authenticated user must have &lt;strong&gt;REPO_WRITE&lt;/strong&gt; permission for the context repository to call  this resource.
-
+REQUEST QUERY PARAMETERS
+parameter			|			value			|	description
+filterText			|			strin			|	the text to match on
+orderBy				|			string			|	ordering of refs either ALPHABETICAL (by name) or MODIFICATION (last updated)
 @return */
-func (a *DefaultApiService) CreateBranch(projectKey, repositorySlug string, PostBody interface{}) (*APIResponse, error) {
+func (a *DefaultApiService) CreateBranch(projectKey, repositorySlug string, postBody map[string]interface{}) (*APIResponse, error) {
 	var (
 		localVarHTTPMethod = strings.ToUpper("Post")
 		localVarFileName   string
@@ -698,7 +701,7 @@ func (a *DefaultApiService) CreateBranch(projectKey, repositorySlug string, Post
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	r, err := a.client.prepareRequest(a.client.ctx, localVarPath, localVarHTTPMethod, PostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	r, err := a.client.prepareRequest(a.client.ctx, localVarPath, localVarHTTPMethod, postBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return nil, err
 	}
