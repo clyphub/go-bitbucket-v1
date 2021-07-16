@@ -1497,3 +1497,42 @@ func TestGetActivitiesResponse(t *testing.T) {
 		})
 	}
 }
+
+func TestCreateTagResponse(t *testing.T) {
+	type args struct {
+		r *APIResponse
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    Tag
+		wantErr bool
+	}{
+		{
+			name: "Create tag response",
+			args: args{
+				r: &APIResponse{
+					Values: map[string]interface{}{
+						"displayId": "123",
+					},
+				},
+			},
+			want: Tag{
+				DisplayID: "123",
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := CreateTagResponse(tt.args.r)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("CreateTagResponse() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("CreateTagResponse() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
