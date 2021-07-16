@@ -1499,40 +1499,23 @@ func TestGetActivitiesResponse(t *testing.T) {
 }
 
 func TestCreateTagResponse(t *testing.T) {
-	type args struct {
-		r *APIResponse
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    Tag
-		wantErr bool
-	}{
-		{
-			name: "Create tag response",
-			args: args{
-				r: &APIResponse{
-					Values: map[string]interface{}{
-						"displayId": "123",
-					},
-				},
+	t.Run("happy path - CreateTag response", func(t *testing.T) {
+		expactedTag := Tag{
+			DisplayID: "123",
+		}
+
+		res, err := CreateTagResponse(&APIResponse{
+			Values: map[string]interface{}{
+				"displayId": expactedTag.DisplayID,
 			},
-			want: Tag{
-				DisplayID: "123",
-			},
-			wantErr: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := CreateTagResponse(tt.args.r)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("CreateTagResponse() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("CreateTagResponse() got = %v, want %v", got, tt.want)
-			}
 		})
-	}
+
+		if err != nil {
+			t.Errorf("CreateTagResponse() error = %v", err)
+			return
+		}
+		if !reflect.DeepEqual(res, expactedTag) {
+			t.Errorf("CreateTagResponse() got = %v, want %v", res, expactedTag)
+		}
+	})
 }
