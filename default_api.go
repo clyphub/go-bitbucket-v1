@@ -1081,14 +1081,23 @@ func (a *DefaultApiService) CreatePullRequestWithOptions(projectKey, repo string
 	return NewBitbucketAPIResponse(localVarHTTPResponse)
 }
 
+// CreateTagRequest represents a Bitbucket create tag post body in a repository.
+// https://docs.atlassian.com/bitbucket-server/rest/7.14.0/bitbucket-git-rest.html#idp5
+type CreateTagRequest struct {
+	Force      bool   `json:"force,omitempty"`
+	Message    string `json:"message,omitempty"`
+	TagName    string `json:"name"`
+	StartPoint string `json:"startPoint"`
+	Type       string `json:"type,omitempty"`
+}
+
 /* DefaultApiService
 Creates a tag using the information provided in the {@link RestCreateTagRequest request}  &lt;p&gt;  The authenticated user must have &lt;strong&gt;REPO_WRITE&lt;/strong&gt; permission for the context repository to call this  resource.
 
 @return */
-func (a *DefaultApiService) CreateTag(projectKey, repositorySlug string) (*APIResponse, error) {
+func (a *DefaultApiService) CreateTag(projectKey, repositorySlug string, reqBody CreateTagRequest) (*APIResponse, error) {
 	var (
 		localVarHTTPMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
 	)
@@ -1119,7 +1128,7 @@ func (a *DefaultApiService) CreateTag(projectKey, repositorySlug string) (*APIRe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	r, err := a.client.prepareRequest(a.client.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	r, err := a.client.prepareRequest(a.client.ctx, localVarPath, localVarHTTPMethod, reqBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return nil, err
 	}

@@ -1010,6 +1010,7 @@ func TestDefaultApiService_CreateTag(t *testing.T) {
 	type args struct {
 		projectKey     string
 		repositorySlug string
+		reqBody        CreateTagRequest
 	}
 	tests := []struct {
 		name                     string
@@ -1028,7 +1029,7 @@ func TestDefaultApiService_CreateTag(t *testing.T) {
 			a := &DefaultApiService{
 				client: tt.fields.client,
 			}
-			got, err := a.CreateTag(tt.args.projectKey, tt.args.repositorySlug)
+			got, err := a.CreateTag(tt.args.projectKey, tt.args.repositorySlug, tt.args.reqBody)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("DefaultApiService.CreateTag() error = %v, wantErr %v", err, tt.wantErr)
 				return
