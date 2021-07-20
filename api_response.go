@@ -547,6 +547,13 @@ func GetTagsResponse(r *APIResponse) ([]Tag, error) {
 	return m, err
 }
 
+// CreateTagResponse cast Tag into structure
+func CreateTagResponse(r *APIResponse) (Tag, error) {
+	var m Tag
+	err := mapstructure.Decode(r.Values, &m)
+	return m, err
+}
+
 // GetBranchesResponse cast Tags into structure
 func GetBranchesResponse(r *APIResponse) ([]Branch, error) {
 	var m []Branch

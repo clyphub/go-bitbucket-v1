@@ -1497,3 +1497,25 @@ func TestGetActivitiesResponse(t *testing.T) {
 		})
 	}
 }
+
+func TestCreateTagResponse(t *testing.T) {
+	t.Run("happy path - CreateTag response", func(t *testing.T) {
+		expactedTag := Tag{
+			DisplayID: "123",
+		}
+
+		res, err := CreateTagResponse(&APIResponse{
+			Values: map[string]interface{}{
+				"displayId": expactedTag.DisplayID,
+			},
+		})
+
+		if err != nil {
+			t.Errorf("CreateTagResponse() error = %v", err)
+			return
+		}
+		if !reflect.DeepEqual(res, expactedTag) {
+			t.Errorf("CreateTagResponse() got = %v, want %v", res, expactedTag)
+		}
+	})
+}
